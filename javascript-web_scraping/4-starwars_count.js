@@ -2,12 +2,11 @@
 
 const r = require('request');
 
-r('https://swapi-api.hbtn.io/api/films/', (e, res) => {
-  // console.log(JSON.parse(res.body).results)
+r(process.argv[2], (e, res) => {
   let x = 0;
 
   JSON.parse(res.body).results.forEach(title => {
-    for (const person of title.characters) { if (person.id === 18) { x += 1; } }
-    console.log(x);
+    for (const person of title.characters) { if (person.includes('18')) { x += 1; } }
   });
+  console.log(x);
 });
