@@ -1,1 +1,1 @@
-module.exports = function displayMessage(toPrint) { console.log(toPrint); }
+module.exports = function displayMessage(toPrint) { console.log(toPrint); };
