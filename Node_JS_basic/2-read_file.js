@@ -1,8 +1,8 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 
-module.exports = function countStudents(path) {
-  fs.readFile(path, 'utf-8', (err, data) => {
-    if (err) { throw new Error('Cannot load the database'); }
+module.exports = async function countStudents(path) {
+  try {
+    const data = await fs.readFile(path, { encoding: 'utf-8' });
     const lines = data.split('\n').filter((element) => element !== '');
     console.log(`Number of students: ${lines.length - 1}`);
 
@@ -18,8 +18,9 @@ module.exports = function countStudents(path) {
           .map((line) => line.filter(() => line[3] === field)
             .filter((element) => line.indexOf(element) === 0))
           .flat();
-        console.log(`Number of students in ${field}: ${students.length}`, students.join(', '));
+        console.log(`Number of students in ${field}: ${students.length}. List:`, students.join(', '));
       }
     }
-  });
+  } catch (err) { throw new Error('Cannot load database'); }
 };
+
