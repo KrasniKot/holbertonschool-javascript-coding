@@ -1,10 +1,8 @@
 const fs = require('fs');
-
+  
 module.exports = function countStudents(path) {
-  let data = '';
-  try {
-    data = fs.readFileSync(path, { encoding: 'utf8', flag: 'r' });
-  } catch (err) { throw Error('Cannot load the database'); }
+  try { data = fs.readFileSync(path, { encoding: 'utf8', flag: 'r' }); }
+  catch (err) { throw Error('Cannot load the database'); }
   const lines = data.split('\n').filter((element) => element !== '');
   console.log(`Number of students: ${lines.length - 1}`);
 
@@ -20,7 +18,7 @@ module.exports = function countStudents(path) {
         .map((line) => line.filter(() => line[3] === field)
           .filter((element) => line.indexOf(element) === 0))
         .flat();
-      console.log(`Number of students in ${field}: ${students.length}. List:`, students.join(', '));
+      console.log(`Number of students in ${fields}: ${students.length}. List: ${students.join(', ')}`);
     }
   }
-};
+}
