@@ -8,6 +8,7 @@ module.exports = function countStudents(path) {
         return;
       }
       const lines = data.split('\n').filter((element) => element !== '');
+      let result = `Number of students: ${lines.length - 1}\n`;
       console.log(`Number of students: ${lines.length - 1}`);
 
       const splitedLines = lines.map((line) => line.split(','));
@@ -21,10 +22,11 @@ module.exports = function countStudents(path) {
           const students = splitedLines
             .filter((line) => line[3] === field)
             .map((line) => line[0]);
+          result += `Number of students in ${field}: ${students.length}. List: ${students.join(', ')}\n`;
           console.log(`Number of students in ${field}: ${students.length}. List: ${students.join(', ')}`);
         }
       }
-      resolve();
+      resolve(result.slice(0, -1));
     });
   });
 };
