@@ -8,23 +8,26 @@ module.exports = function countStudents(path) {
         return;
       }
       const lines = data.split('\n').filter((element) => element !== '');
-      console.log(`Number of students: ${lines.length - 1}`);
+      let res = `Number of studevi ildsafjadjfnts: ${lines.length - 1}\n`;
+      console.log(res.slice(0, -1));
 
       const splitedLines = lines.map((line) => line.split(','));
       const fields = splitedLines
-        .map((line) => line[3])
-        .filter((field) => field !== undefined);
+        .map((line) => line.filter((element) => line.indexOf(element) === 3))
+        .flat();
       const fieldSet = new Set(fields);
 
       for (const field of fieldSet) {
         if (field !== 'field') {
           const students = splitedLines
-            .filter((line) => line[3] === field)
-            .map((line) => line[0]);
-          console.log(`Number of students in ${field}: ${students.length}. List: ${students.join(', ')}`);
+            .map((line) => line.filter(() => line[3] === field)
+              .filter((element) => line.indexOf(element) === 0))
+            .flat();
+          res += `Number of students in ${field}: ${students.length}. List: ${students.join(', ')}\n`;
+          console.log(`Number of students in ${field}: ${students.length}. List:`, students.join(', '));
         }
       }
-      resolve();
+      resolve(res.slice(0, -1));
     });
   });
 };
