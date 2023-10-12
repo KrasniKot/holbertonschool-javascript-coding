@@ -3,14 +3,19 @@ const students = require('./3-read_file_async');
 
 const app = http.createServer((req, res) => {
   const asked = (req.url);
-  if (asked === '/') { res.end('Hello Holberton School!'); }
+  if (asked === '/') {
+    res.writeHead(200);
+    res.end('Hello Holberton School!');
+  }
   if (asked === '/students') {
+    res.writeHead(200);
     res.write('This is the list of our students\n');
     students(process.argv[2])
       .then((data) => {
         res.end(data);
       })
       .catch((error) => {
+        res.writeHead(400);
         res.end(error.message);
       });
   }
