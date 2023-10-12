@@ -4,11 +4,12 @@ module.exports = function countStudents(path) {
   return new Promise((resolve, reject) => {
     fs.readFile(path, 'utf-8', (err, data) => {
       if (err) {
-        reject(new Error('Cannot load the database'));
+        reject(Error('Cannot load the database'));
         return;
       }
       const lines = data.split('\n').filter((element) => element !== '');
-      console.log(`Number of students: ${lines.length - 1}`);
+      let res = `Number of students: ${lines.length - 1}\n`;
+      console.log(res.slice(0,-1));
 
       const splitedLines = lines.map((line) => line.split(','));
       const fields = splitedLines
@@ -22,10 +23,11 @@ module.exports = function countStudents(path) {
             .map((line) => line.filter(() => line[3] === field)
               .filter((element) => line.indexOf(element) === 0))
             .flat();
+          res += `Number of students in ${field}: ${students.length}. List:, ${students.join(', ')}\n`;
           console.log(`Number of students in ${field}: ${students.length}. List:`, students.join(', '));
         }
       }
-      resolve(`Number of students: ${lines.length - 1}`);
+      resolve(res.slice(0, -1));
     });
   });
 };
