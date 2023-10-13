@@ -15,9 +15,9 @@ const app = http.createServer((req, res) => {
         res.end(data);
       })
       .catch((error) => {
-        res.writeHead(400);
         res.end(error.message);
       });
+
   }
 }).listen(1245);
 
