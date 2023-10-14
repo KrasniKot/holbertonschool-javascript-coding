@@ -13,7 +13,7 @@ module.exports = class StudentsController {
 
       response.status(200).send(body.slice(0, -1));
     } catch (error) {
-        response.status(500).send(error.message);
+      response.status(500).send(error.message);
     }
   }
 
@@ -28,7 +28,9 @@ module.exports = class StudentsController {
 
       response.status(200).send(`List: ${fields[major].join(', ')}`);
     }
-  } catch(error) {
-      response.status(500).send(error.message);
+  }
+
+  catch(error) {
+    response.status(500).send(error.message);
   }
 };

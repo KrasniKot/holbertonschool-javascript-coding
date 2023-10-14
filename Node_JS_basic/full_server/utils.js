@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return, consistent-return */
 const fs = require('fs');
 
 module.exports = function readDatabase(path) {
@@ -7,17 +8,17 @@ module.exports = function readDatabase(path) {
 
       const lines = data.split('\n').filter((element) => element !== '');
       const fields = new Set(lines.map((line) => line.split(',')[3]));
-      const field_stnts = {};
+      const fieldStnts = {};
 
       for (const field of fields) {
         if (field !== 'field') {
-          field_stnts[field] = lines.map((line) => {
-	    const student = line.split(',')[0];
+          fieldStnts[field] = lines.map((line) => {
+            const student = line.split(',')[0];
             if (student !== 'firstname' && line.split(',')[3] === field) return student;
-	  }).filter((student) => student !== undefined);
+          }).filter((student) => student !== undefined);
         }
       }
-      resolve(field_stnts);
+      resolve(fieldStnts);
     });
   });
 };
