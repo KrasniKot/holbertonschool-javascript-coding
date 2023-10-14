@@ -6,6 +6,10 @@ class StudentsController {
       let body = 'This is the list of our students\n';
 
       const fields = await rD(process.argv[2]);
+      if (!fileds) {
+        respons.status(500).send('Cannot load the database');
+        return;
+      }
 
       for (const field of Object.keys(fields).sort()) {
         body += `Number of students in ${field}: ${fields[field].length}. List: ${fields[field].join(', ')}\n`;
