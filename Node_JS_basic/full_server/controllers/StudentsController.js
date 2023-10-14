@@ -13,12 +13,12 @@ module.exports = class StudentsController {
 
       response.status(200).send(body.slice(0, -1));
     } catch (error) {
-        response.status(500).send('Cannot load the database');
+        response.status(500).send(error.message);
     }
   }
 
   static async getAllStudentsByMajor(request, response) {
-    let major = request.params['major'];
+    const { major } = request.params;
     const accpt = ['CS', 'SWE'];
 
     if (!accpt.includes(major)) {
@@ -28,7 +28,7 @@ module.exports = class StudentsController {
 
       response.status(200).send(`List: ${fields[major].join(', ')}`);
     }
-  } catch (error) {
-      response.status(500).send('Cannot load the database');
+  } catch(error) {
+      response.status(500).send(error.message);
   }
 };

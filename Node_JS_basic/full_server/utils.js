@@ -7,7 +7,7 @@ module.exports = function readDatabase(path) {
 
       const lines = data.split('\n').filter((element) => element !== '');
       const fields = new Set(lines.map((line) => line.split(',')[3]));
-      const field_stnts = {}
+      const field_stnts = {};
 
       for (const field of fields) {
         if (field !== 'field') {
@@ -15,8 +15,9 @@ module.exports = function readDatabase(path) {
 	    const student = line.split(',')[0];
             if (student !== 'firstname' && line.split(',')[3] === field) return student;
 	  }).filter((student) => student !== undefined);
-      }}
+        }
+      }
       resolve(field_stnts);
     });
   });
-}
+};
