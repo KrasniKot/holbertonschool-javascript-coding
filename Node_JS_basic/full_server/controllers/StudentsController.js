@@ -1,6 +1,6 @@
 const rD = require('../utils');
 
-module.exports = class StudentsController {
+class StudentsController {
   static async getAllStudents(request, response) {
     try {
       let body = 'This is the list of our students\n';
@@ -12,7 +12,7 @@ module.exports = class StudentsController {
       }
 
       response.status(200).send(body.slice(0, -1));
-    } catch (error) {
+    } catch (_) {
       response.status(500).send('Cannot load the database');
     }
   }
@@ -26,10 +26,17 @@ module.exports = class StudentsController {
         response.status(500).send('Major parameter must be CS or SWE');
       } else {
         const fields = await rD(process.argv[2]);
-        response.status(200).send(`List: ${fields[major].join(', ')}`);
+        
+        if (!fields || !fields[major]) {
+          response.status(500).send('Cannot load the database');
+        } else {
+          response.status(200).send(`List: ${fields[major].join(', ')}`);
+        }
       }
-    } catch (error) {
+    } catch (_) {
       response.status(500).send('Cannot load the database');
     }
   }
-};
+}
+
+module.exports = StudentsController;
