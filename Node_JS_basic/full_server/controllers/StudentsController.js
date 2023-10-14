@@ -6,9 +6,9 @@ class StudentsController {
       let body = 'This is the list of our students\n';
 
       const fields = await rD(process.argv[2]);
-      if (!fileds) {
-        respons.status(500).send('Cannot load the database');
-        return;
+
+      if (!fields || fields.length === 0) {
+        return response.status(500).send('Cannot load the database');
       }
 
       for (const field of Object.keys(fields).sort()) {
@@ -30,12 +30,12 @@ class StudentsController {
         response.status(500).send('Major parameter must be CS or SWE');
       } else {
         const fields = await rD(process.argv[2]);
-        
-        if (!fields || !fields[major]) {
-          response.status(500).send('Cannot load the database');
-        } else {
-          response.status(200).send(`List: ${fields[major].join(', ')}`);
+
+        if (!fields || fields.length === 0) {
+          return response.status(500).send('Cannot load the database');
         }
+
+        response.status(200).send(`List: ${fields[major].join(', ')}`);
       }
     } catch (_) {
       response.status(500).send('Cannot load the database');
