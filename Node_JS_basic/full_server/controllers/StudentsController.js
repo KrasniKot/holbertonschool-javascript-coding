@@ -12,7 +12,7 @@ module.exports = class StudentsController {
       }
 
       response.status(200).send(body.slice(0, -1));
-    } catch (_) {
+    } catch (error) {
       response.status(500).send('Cannot load the database');
     }
   }
@@ -28,7 +28,7 @@ module.exports = class StudentsController {
         const fields = await rD(process.argv[2]);
         response.status(200).send(`List: ${fields[major].join(', ')}`);
       }
-    } catch (_) {
+    } catch (error) {
       response.status(500).send('Cannot load the database');
     }
   }
