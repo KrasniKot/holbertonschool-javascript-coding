@@ -61,5 +61,37 @@ In a file named `7-http_express.js`, recreate the small HTTP server using `Expre
 * When the URL path is `/students`, it should display `This is the list of our students` followed by the same content as the file `3-read_file_async.js` (with and without the database) - the name of the database must be passed as argument of the file
 * CSV file can contain empty lines (at the end) - and they are not a valid student!
 
-#### Done:
-* 6 out of 9
+### Task 8 Organize a complex HTTP server using Express:
+Obviously writing every part of a server within a single file is not sustainable. Let’s create a full server in a directory named `full_server`.
+Since you have used ES6 and Babel in the past projects, let’s use `babel-node` to allow to use ES6 functions like `import` or `export`.
+#### 8.1 Organize the structure of the server:
+* Create 2 directories within:
+	* `controllers`
+	* `routes`
+* Create a file `full_server/utils.js`, in the file create a function named `readDatabase` that accepts a file path as argument:
+	* It should read the database asynchronously
+	* It should return a promise
+	* When the file is not accessible, it should reject the promise with the error
+	* When the file can be read, it should return an object of arrays of the firstname of students per fields
+#### 8.2 Write the App controller:
+Inside the file `full_server/controllers/AppController.js`:
+* Create a class named `AppController`. Add a static method named `getHomepage`
+* The method accepts `request` and `response` as argument. It returns a 200 status and the message `Hello Holberton School!`
+#### 8.3 Write the Students controller:
+Inside the file `full_server/controllers/StudentsController.js`, create a class named `StudentsController`. Add two static methods:  
+The first one is `getAllStudents`:
+* The method accepts `request` and `response` as argument
+* It should return a status 200
+* It calls the function `readDatabase` from the `utils` file, and display in the page:
+	* First line: `This is the list of our students`
+	* And for each field (order by alphabetic order case insensitive), a line that displays the number of students in the field, and the list of first names (ordered by appearance in the database file) with the following format: `Number of students in FIELD: 6. List: LIST_OF_FIRSTNAMES`
+	* If the database is not available, it should return a status 500 and the error message `Cannot load the database`
+The second one is `getAllStudentsByMajor`:
+* The method accepts `request` and `response` as argument
+* It should return a status 200
+* It uses a parameter that the user can pass to the browser `major`. The `major` can only be `CS` or `SWE`. If the user is passing another parameter, the server should return a 500 and the error `Major parameter must be CS or SWE`
+* It calls the function `readDatabase` from the `utils` file, and display in the page the list of first names for the students (ordered by appearance in the database file) in the specified field `List: LIST_OF_FIRSTNAMES_IN_THE_FIELD`
+* If the database is not available, it should return a status 500 and the error message `Cannot load the database`
+
+#### Done
+* 8 out of 9
